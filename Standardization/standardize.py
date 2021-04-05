@@ -8,6 +8,7 @@ Created on 3/30/2021
 """
 
 import pandas as pd
+import numpy as np
 
 def make_columns_float(dataframe, cols):
     """
@@ -45,7 +46,40 @@ def get_summary_data(dataframe, groupcolumns, summarycolumns):
     df_summary.reset_index(inplace=True)
     return df_summary
 
-# This is the main function
+def standardize_dataframe(dataframe, dropcolumns, standardizecolumns, keep):
+    """
+    Generates standardized dataframe on specified columns
+
+    Parameters
+    ----------
+    dataframe : pandas dataframe
+        initial dataframe to be standardized
+    dropcolumns : list of column names (strings)
+        columns to drop in initial dataframe
+    standardizecolumns : list of column names (strings)
+        columns to standardize in initial dataframe
+    keep: boolean
+        option to keep original columns for list of standardized columns
+
+    Returns
+    -------
+    df_standardized : TYPE
+        DESCRIPTION.
+
+    """
+    make_columns_float(dataframe, standardizecolumns)
+    df_standardized = dataframe.copy()
+    for col in standardizecolumns:
+        df_mean = dataframe[col].mean()
+        df_std = dataframe[col].std()
+        df_standardized[col + "_standardized"] = (df_standardized[col] - df_mean)/df_std
+    df_standardized.drop(columns = dropcolumns, inplace=True)
+    if keep == False:
+        df_standardized.drop(columns = standardizecolumns, inplace=True)
+    return df_standardized
+        
+
+# Standardized column values in dataframe with group by from specified columns
 def standardize_dataframe_by_group(dataframe, groupcolumns, dropcolumns, standardizecolumns, keep):
     """
     Generates standardized dataframe based on groupby columns
@@ -79,6 +113,9 @@ def standardize_dataframe_by_group(dataframe, groupcolumns, dropcolumns, standar
         df_standardized.drop(columns = standardizecolumns, inplace=True)
     return df_standardized
 
+# intial test dataframe
+df = pd.DataFrame(np.array([['A', 4, 7], ['A', 5, 8], ['B', 6, 9], ['B', 7, 10]]), columns=['a', 'b', 'c'])
+print(standardize_dataframe(df, ['a', 'c'], ['b'], True))
 
 
 

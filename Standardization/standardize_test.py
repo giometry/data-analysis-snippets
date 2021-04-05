@@ -36,8 +36,25 @@ sbg.make_columns_float(df_standardized_by_a_v5, ['c', 'b_standardized'])
 
 # expected standardized dataframe output for standardizing columns b (keep column c) with groupings from column a and keep = true
 df_standardized_by_a_v6 = pd.DataFrame(np.array([['A', 4, 7, -0.7071067811865475], ['A', 5, 8, 0.7071067811865475], ['B', 6, 9, -0.7071067811865475], ['B', 7, 10, 0.7071067811865475]]), columns=['a', 'b', 'c', 'b_standardized'])
-sbg.make_columns_float(df_standardized_by_a_v6, ['b', 'c', 'b_standardized'])
+sbg.make_columns_float(df_standardized_by_a_v6, ['b', 'c', 'b_standardized'])        
 
+# expected basic standardization with keep = true
+df_basic_standardize = pd.DataFrame(np.array([[4, -1.161895], [5, -0.387298], [6, 0.387298], [7, 1.161895]]), columns=['b', 'b_standardized'])
+sbg.make_columns_float(df_basic_standardize, ['b', 'b_standardized'])
+
+# expected basic standardization with keep = false
+df_basic_standardize_v2 = pd.DataFrame(np.array([[-1.161895], [-0.387298], [0.387298], [1.161895]]), columns=['b_standardized'])
+sbg.make_columns_float(df_basic_standardize_v2, ['b_standardized'])
+
+# tests the basic standardization function
+class TestStandardizeMethod(unittest.TestCase):
+    
+    def test_basic_standardization(self):
+        # Test standardizing columns b, dropping column a,c and keep = false
+        pd.testing.assert_frame_equal(df_basic_standardize, sbg.standardize_dataframe(df, ['a', 'c'], ['b'], True))
+        # Test standardizing columns b, dropping column a,c and keep = true
+        pd.testing.assert_frame_equal(df_basic_standardize_v2, sbg.standardize_dataframe(df, ['a', 'c'], ['b'], False))
+        
 # tests the standardize by group function
 class TestStandardizeByGroupMethod(unittest.TestCase):
 
