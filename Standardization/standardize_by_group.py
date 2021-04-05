@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """
 Code to standardize dataframe based on groupby columns
+Creates a new dataframe with standardized values
+
 Created on 3/30/2021
 @author: Giovanni R Budi
 """
