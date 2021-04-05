@@ -43,21 +43,21 @@ class TestStandardizeByGroupMethod(unittest.TestCase):
 
     def test_basic_standardization(self):
         # Test standardizing columns b,c with groupings from column a and keep = false
-        self.assertTrue(sbg.standardize_dataframe_by_group(df, ['a'], [], ['b','c'], False).equals(df_standardized_by_a))
-        # Test standardizing columns b,c with groupings from column a and keep = false
-        self.assertTrue(sbg.standardize_dataframe_by_group(df, ['a'], [], ['b','c'], True).equals(df_standardized_by_a_v2))
+        pd.testing.assert_frame_equal(df_standardized_by_a, sbg.standardize_dataframe_by_group(df, ['a'], [], ['b','c'], False))
+        # Test standardizing columns b,c with groupings from column a and keep = true
+        pd.testing.assert_frame_equal(df_standardized_by_a_v2, sbg.standardize_dataframe_by_group(df, ['a'], [], ['b','c'], True))
 
     def test_dropping_columns(self):
         # Test standardizing columns b (drop column c) with groupings from column a and keep = false
-        self.assertTrue(sbg.standardize_dataframe_by_group(df, ['a'], ['c'], ['b'], False).equals(df_standardized_by_a_v3))
+        pd.testing.assert_frame_equal(df_standardized_by_a_v3, sbg.standardize_dataframe_by_group(df, ['a'], ['c'], ['b'], False))
         # Test standardizing columns b (drop column c) with groupings from column a and keep = true
-        self.assertTrue(sbg.standardize_dataframe_by_group(df, ['a'], ['c'], ['b'], True).equals(df_standardized_by_a_v4))
+        pd.testing.assert_frame_equal(df_standardized_by_a_v4, sbg.standardize_dataframe_by_group(df, ['a'], ['c'], ['b'], True))
         
     def test_keeping_columns(self):
         # Test standardizing columns b (keep column c) with groupings from column a and keep = false
-        self.assertTrue(sbg.standardize_dataframe_by_group(df, ['a'], [], ['b'], False).equals(df_standardized_by_a_v5))
+        pd.testing.assert_frame_equal(df_standardized_by_a_v5, sbg.standardize_dataframe_by_group(df, ['a'], [], ['b'], False))
         # Test standardizing columns b (keep column c) with groupings from column a and keep = true
-        self.assertTrue(sbg.standardize_dataframe_by_group(df, ['a'], [], ['b'], True).equals(df_standardized_by_a_v6))
+        pd.testing.assert_frame_equal(df_standardized_by_a_v6, sbg.standardize_dataframe_by_group(df, ['a'], [], ['b'], True))
 
 if __name__ == '__main__':
     unittest.main()
