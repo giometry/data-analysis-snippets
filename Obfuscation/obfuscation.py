@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 """
 Code to obfuscate dataframe
+- Obfuscates numeric columns based on key
+- Obfuscates column names
+- Changes specified dataframe with obfuscated values
+
 Created on 3/30/2021
 @author: Giovanni R Budi
 """
