@@ -113,9 +113,6 @@ def standardize_dataframe_by_group(dataframe, groupcolumns, dropcolumns, standar
         df_standardized.drop(columns = standardizecolumns, inplace=True)
     return df_standardized
 
-# intial test dataframe
-df = pd.DataFrame(np.array([['A', 4, 7], ['A', 5, 8], ['B', 6, 9], ['B', 7, 10]]), columns=['a', 'b', 'c'])
-print(standardize_dataframe(df, ['a', 'c'], ['b'], True))
 
 
 
